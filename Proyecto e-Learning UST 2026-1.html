@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto e-Learning UST 2026-1</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{--navy:#0a2040;--gold:#c89030;--gold2:#e8a820;--bg:#f0f2f6;--bg2:#e4e8f0;--bg3:#d8dcea;--card:#ffffff;--card2:#f5f7fb;--border:#dde2ee;--border2:#c8cedc;--text:#0a1628;--text2:#2a3a58;--text3:#6a7a98;--green:#0a7a4e;--green-bg:#e4f5ee;--blue:#1050a0;--blue-bg:#e4ecf8;--amber:#8a5000;--amber-bg:#fef3e0;--purple:#5030a0;--purp-bg:#ece8fc;--font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--r:14px;--sh:0 2px 8px rgba(10,32,64,.07);--sh2:0 8px 28px rgba(10,32,64,.14);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;}
+.nav{background:var(--navy);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(10,32,64,.3);}
+.nav-body{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;gap:20px;}
+.nav-left{display:flex;align-items:center;gap:12px;}
+.nav-ust{background:var(--gold);color:var(--navy);font-weight:700;font-size:13px;padding:4px 10px;border-radius:6px;letter-spacing:.04em;}
+.nav-sep{color:rgba(255,255,255,.25);margin:0 2px;}
+.nav-title{color:rgba(255,255,255,.9);font-size:14px;font-weight:500;}
+.live{background:rgba(232,168,32,.18);border:1px solid rgba(232,168,32,.4);color:var(--gold2);font-family:var(--mono);font-size:10px;padding:2px 9px;border-radius:4px;display:flex;align-items:center;gap:5px;}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--gold2);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-date{color:rgba(255,255,255,.38);font-family:var(--mono);font-size:11px;}
+.nav-stats{display:flex;gap:10px;}
+.ns{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:8px 20px;text-align:center;}
+.ns-v{font-family:var(--mono);font-size:22px;font-weight:700;color:#fff;line-height:1;}
+.ns-l{font-size:10px;color:rgba(255,255,255,.45);margin-top:2px;text-transform:uppercase;letter-spacing:.06em;}
+main{max-width:1480px;margin:0 auto;padding:28px 28px 60px;}
+.sec{margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.sec-line{flex:1;height:1px;background:var(--border);}
+.sec-title{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;white-space:nowrap;}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
+.fc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .15s;}
+.fc:hover{box-shadow:var(--sh2);transform:translateY(-2px);}
+.fc-stripe{height:4px;}
+.fc-head{padding:18px 20px 0;display:flex;align-items:flex-start;gap:14px;}
+.fc-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.fc-info{flex:1;}
+.fc-name{font-size:14px;font-weight:700;color:var(--navy);line-height:1.2;}
+.fc-count{font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:3px;}
+.fc-right{text-align:right;flex-shrink:0;}
+.fc-num{font-family:var(--mono);font-size:40px;font-weight:700;line-height:1;}
+.fc-num-l{font-size:10px;color:var(--text3);margin-top:1px;}
+.fc-prog{padding:12px 20px 14px;}
+.prog-bar{height:5px;background:var(--bg2);border-radius:3px;overflow:hidden;margin-bottom:5px;}
+.prog-fill{height:100%;border-radius:3px;transition:width .8s;}
+.prog-lbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;font-weight:600;}
+.fc-visual{display:flex;align-items:center;gap:16px;padding:4px 20px 18px;}
+.donut-wrap{width:120px;height:120px;flex-shrink:0;position:relative;}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
+.donut-pct{font-family:var(--mono);font-size:20px;font-weight:700;line-height:1;}
+.donut-sub{font-size:9px;color:var(--text3);margin-top:2px;}
+.leg-col{flex:1;display:flex;flex-direction:column;gap:8px;}
+.leg-i{display:flex;align-items:center;gap:8px;}
+.leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.leg-txt{flex:1;font-size:12px;color:var(--text2);}
+.leg-val{font-family:var(--mono);font-size:15px;font-weight:700;}
+.ov{display:none;position:fixed;inset:0;z-index:200;background:rgba(10,20,50,.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;}
+.ov.open{display:flex;}
+.mo{background:var(--card);border:1px solid var(--border2);border-radius:16px;width:700px;max-width:96vw;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(10,20,50,.2);animation:up .2s ease;}
+@keyframes up{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
+.mo-stripe{height:4px;border-radius:16px 16px 0 0;}
+.mc{position:absolute;top:14px;right:14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--text2);transition:all .15s;}
+.mc:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.mo-top{padding:22px 26px 18px;border-bottom:1px solid var(--border);}
+.mo-badge{display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 9px;border-radius:4px;margin-bottom:8px;font-weight:500;}
+.mo-title{font-size:18px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:12px;padding-right:36px;}
+.mo-chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.chip{padding:4px 11px;border-radius:6px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:5px;}
+.chip-n{background:var(--navy);color:#fff;}
+.chip-g{background:var(--gold);color:var(--navy);}
+.chip .lbl{font-family:var(--mono);font-size:9px;opacity:.6;text-transform:uppercase;}
+.mo-pch{margin-left:auto;font-family:var(--mono);font-size:13px;font-weight:700;padding:5px 14px;border-radius:6px;border:2px solid;}
+.mo-body{padding:22px 26px;}
+.msec{margin-bottom:20px;}
+.mst{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;padding-bottom:7px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+.mstates{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;}
+.msc{border:1px solid var(--border);background:var(--card2);border-radius:8px;padding:10px 8px;text-align:center;}
+.msc .sl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;font-family:var(--mono);margin-bottom:3px;}
+.msc .sv{font-family:var(--mono);font-size:20px;font-weight:500;}
+.s0 .sv{color:var(--text3);}
+.s1{background:var(--blue-bg);border-color:rgba(16,80,160,.15);}.s1 .sv{color:var(--blue);}
+.s2{background:var(--amber-bg);border-color:rgba(138,80,0,.15);}.s2 .sv{color:var(--amber);}
+.s3{background:var(--purp-bg);border-color:rgba(80,48,160,.15);}.s3 .sv{color:var(--purple);}
+.s4{background:var(--green-bg);border-color:rgba(10,122,78,.15);}.s4 .sv{color:var(--green);}
+.s5{background:var(--green);border-color:var(--green);}.s5 .sl{color:rgba(255,255,255,.7);}.s5 .sv{color:#fff;}
+.evo-wrap{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:14px;height:180px;position:relative;}
+.evo-lbl{position:absolute;top:10px;left:14px;font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;}
+.evo-pct{position:absolute;top:10px;right:14px;}
+.mo-hours{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
+.mhc{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:11px;}
+.mhc .hl{font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.mhc .hv{font-family:var(--mono);font-size:21px;font-weight:500;}
+.hvs{color:var(--blue)}.hva{color:var(--amber)}.hvp{color:var(--navy)}.hvl{color:var(--purple)}.hvt{color:#903010}.hvtpe{color:var(--text3)}.hvay{color:var(--green)}
+.hu{font-size:11px;color:var(--text3);margin-left:2px;}
+.hstack{display:flex;height:8px;border-radius:4px;overflow:hidden;gap:1px;margin-bottom:6px;}
+.hstack-s{height:100%;}
+.hleg{display:flex;gap:10px;flex-wrap:wrap;}
+.hleg-i{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3);font-family:var(--mono);}
+.hleg-d{width:8px;height:8px;border-radius:2px;}
+.mo-res{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.mrc{border-radius:8px;border:1px solid var(--border);padding:13px;}
+.mrc .rt{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
+.mrc .rv{font-family:var(--mono);font-size:24px;font-weight:500;line-height:1;margin-bottom:3px;}
+.mrc .rd{font-size:10px;color:var(--text3);line-height:1.4;}
+.r1{background:var(--blue-bg);border-color:rgba(16,80,160,.14);}.r1 .rv{color:var(--blue);}
+.r2{background:var(--green-bg);border-color:rgba(10,122,78,.14);}.r2 .rv{color:var(--green);}
+.r3{background:var(--amber-bg);border-color:rgba(138,80,0,.14);}.r3 .rv{color:var(--amber);}
+.r4{background:var(--purp-bg);border-color:rgba(80,48,160,.14);}.r4 .rv{color:var(--purple);}
+.subj-list{margin-top:10px;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.subj-list-hdr{display:grid;grid-template-columns:1fr 80px;padding:7px 14px;background:var(--bg2);font-family:var(--mono);font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--border);}
+.subj-list-hdr span:last-child{text-align:center;}
+.si{display:grid;grid-template-columns:1fr 80px;padding:10px 14px;border-bottom:1px solid var(--bg2);cursor:pointer;transition:background .1s;align-items:center;}
+.si:last-child{border-bottom:none;}
+.si:hover{background:var(--bg2);}
+.si-nm{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.si-pct{font-family:var(--mono);font-size:12px;font-weight:700;text-align:center;}
+.dm{display:none;position:fixed;inset:0;z-index:300;background:rgba(10,20,50,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;}
+.dm.open{display:flex;}
+.dm-mo{background:var(--card);border:1px solid var(--border2);border-radius:16px;width:680px;max-width:96vw;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(10,20,50,.2);animation:up .2s ease;}
+.dm-stripe{height:4px;border-radius:16px 16px 0 0;}
+.dm-close{position:absolute;top:14px;right:14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--text2);transition:all .15s;}
+.dm-close:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.dm-top{padding:22px 26px 18px;border-bottom:1px solid var(--border);}
+.dm-badge{display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 9px;border-radius:4px;margin-bottom:8px;font-weight:500;}
+.dm-title{font-size:17px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:12px;padding-right:36px;}
+.dm-chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.dm-body{padding:22px 26px;}
+.dm-sec{margin-bottom:20px;}
+.dm-st{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;padding-bottom:7px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+.footer{text-align:center;padding:28px 0 0;border-top:1px solid var(--border);margin-top:36px;}
+.footer-name{font-size:14px;font-weight:600;color:var(--text2);}
+.footer-role{font-size:12px;color:var(--text3);margin-top:3px;}
+.footer-mail{font-size:11px;color:var(--gold);font-family:var(--mono);text-decoration:none;display:inline-block;margin-top:3px;}
+.footer-div{width:40px;height:1px;background:var(--border);margin:10px auto;}
+.footer-date{font-size:10px;color:var(--text3);font-family:var(--mono);}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-body"><div class="nav-left"><div class="nav-ust">UST</div><span class="nav-sep">/</span><div class="nav-title">Dashboard e-Learning &nbsp;/&nbsp; Proyecto 2026-1</div><div class="live"><div class="ldot"></div>EN VIVO</div></div><div class="nav-right"><div class="nav-date" id="clk"></div><div class="nav-stats" id="nav-stats"></div></div></div></nav>
+<main>
+  <div class="sec"><div class="sec-title">Detalle por Facultad / Programa</div><div class="sec-line"></div></div>
+  <div class="fgrid" id="fgrid"></div>
+  <div class="footer"><div class="footer-name">Paulina Vera Benavente</div><div class="footer-role">Directora e-Learning &nbsp;·&nbsp; Universidad Santo Tomás</div><a class="footer-mail" href="mailto:pverab@santotomas.cl">pverab@santotomas.cl</a><div class="footer-div"></div><div class="footer-date">Datos al <b id="fdate" style="color:var(--text2)">—</b> &nbsp;·&nbsp; Proyecto e-Learning 2026-1</div></div>
+</main>
+<div class="ov" id="ov"><div class="mo"><div class="mo-stripe" id="mo-stripe"></div><button class="mc" id="mc">&#10005;</button><div class="mo-top"><div class="mo-badge" id="mo-badge"></div><div class="mo-title" id="mo-title"></div><div class="mo-chips" id="mo-chips"></div></div><div class="mo-body"><div class="msec"><div class="mst">Asignaturas</div><div class="subj-list"><div class="subj-list-hdr"><span>Asignatura</span><span>Avance</span></div><div id="mo-subj-list"></div></div></div></div></div></div>
+<div class="dm" id="dm"><div class="dm-mo"><div class="dm-stripe" id="dm-stripe"></div><button class="dm-close" id="dmc">&#10005;</button><div class="dm-top"><div class="dm-badge" id="dm-badge"></div><div class="dm-title" id="dm-title"></div><div class="dm-chips" id="dm-chips"></div></div><div class="dm-body"><div class="dm-sec"><div class="dm-st">Estado de Recursos</div><div class="mstates" id="dm-states"></div></div><div class="dm-sec"><div class="dm-st">Evolución del Progreso</div><div class="evo-wrap"><div class="evo-lbl">Progreso (%)</div><div class="evo-pct" id="dm-epct"></div><canvas id="dm-evo"></canvas></div></div><div class="dm-sec"><div class="dm-st">Distribución de Horas</div><div class="mo-hours" id="dm-hours"></div><div class="hstack" id="dm-hstack"></div><div class="hleg" id="dm-hleg"></div></div><div class="dm-sec"><div class="dm-st">Recursos a Construir</div><div class="mo-res" id="dm-res"></div></div></div></div></div>
+<script>
+var D=[["María José", "Adrelina", "Ingeniería Térmica", 61.0, 2.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 72.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 19.0, 8.0],["María José", "Adrelina", "Regresión y Pronóstico de Datos", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 52.0, 0.0, 36.0, 54.0, 0.0, 0.0, 0.0, 12.0, 24.0, 10.0, 7.0],["María José", "Adrelina", "Pronóstico de Datos e Inteligencia Artificial", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 72.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 19.0, 8.0],["María José", "Adrelina", "Electivo FP III: Gestión de Operaciones Humanitarias", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 72.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 19.0, 8.0],["María José", "Adrelina", "Análisis de Datos Cuantitativos", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Trabajo Social", 64.0, 0.0, 36.0, 0.0, 36.0, 0.0, 0.0, 0.0, 0.0, 10.0, 8.0],["José Luis", "Cristián", "Gestión de Incertidumbre y Simulación", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 92.0, 0.0, 72.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 19.0, 12.0],["José Luis", "Cristián", "Finanzas Corporativas", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 96.0, 0.0, 36.0, 36.0, 0.0, 0.0, 36.0, 8.0, 16.0, 10.0, 12.0],["José Luis", "Cristián", "Proyecto de Título", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 396.0, 0.0, 36.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 15.0],["José Luis", "Cristián", "Plan de Negocios", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 532.0, 0.0, 24.0, 0.0, 18.0, 0.0, 0.0, 0.0, 0.0, 10.0, 15.0],["José Luis", "Cristián", "Contabilidad Financiera", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 96.0, 36.0, 0.0, 36.0, 0.0, 0.0, 36.0, 8.0, 16.0, 10.0, 12.0],["José Luis", "Cristián", "Microeconomía", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 96.0, 36.0, 0.0, 36.0, 0.0, 0.0, 36.0, 8.0, 16.0, 10.0, 12.0],["José Luis", "Cristián", "Electivo FP: Tecnología Médica I", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Tecnología Médica", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["José Luis", "Cristián", "Electivo FP: Tecnología Médica II", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Tecnología Médica", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["José Luis", "Karen Chavez", "Electivo FP I: Introducción a Operaciones Humanitarias", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 72.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 19.0, 8.0],["José Luis", "Karen Chavez", "Inglés Avanzado I", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["José Luis", "Karen Chavez", "Derecho Comercial y Laboral", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 64.0, 36.0, 0.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["José Luis", "Karen Chavez", "Finanzas corporativas", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 96.0, 0.0, 36.0, 36.0, 0.0, 0.0, 36.0, 8.0, 16.0, 10.0, 12.0],["José Luis", "Karen Chavez", "Políticas públicas, innovación y emprendimiento", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["José Luis", "Karen Chavez", "Interculturalidad y Pueblos Indígenas en Chile", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Formación General", 64.0, 0.0, 54.0, 18.0, 0.0, 0.0, 0.0, 4.0, 8.0, 14.0, 8.0],["José Luis", "Karen Chavez", "Inglés a través de la cultura POP", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Formación General", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["José Luis", "Karen Chavez", "Narrativa Digital", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Formación General", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["Noelia", "José Luis", "Inteligencia de Negocios", 60.0, 3.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 72.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 19.0, 8.0],["Noelia", "José Luis", "Electivo FP I: Tecnología de Energías Renovables", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 72.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 19.0, 8.0],["Noelia", "José Luis", "Electivo FP III: Modelo de Negocios de Residuos", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 72.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 19.0, 8.0],["Noelia", "José Luis", "Evaluación de Proyectos", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Agronomía", 64.0, 8.0, 30.0, 14.0, 20.0, 0.0, 0.0, 3.0, 6.0, 10.0, 8.0],["Noelia", "José Luis", "Sistema de Producción de Cultivos Sostenibles", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Agronomía", 64.0, 24.0, 30.0, 14.0, 0.0, 4.0, 0.0, 3.0, 6.0, 14.0, 8.0],["Noelia", "José Luis", "Sistema de Producción de Frutales Sostenibles", 62.0, 1.0, 0.0, 0.0, 0.0, 0.0, "Agronomía", 64.0, 24.0, 30.0, 14.0, 0.0, 4.0, 0.0, 3.0, 6.0, 14.0, 8.0],["Noelia", "José Luis", "Trabajo de Título", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Agronomía", 88.0, 3.0, 33.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 11.0],["Noelia", "José Luis", "Calidad e Inocuidad Alimentaria", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Agronomía", 64.0, 26.0, 30.0, 10.0, 0.0, 6.0, 0.0, 2.0, 4.0, 15.0, 8.0],["Noelia", "José Luis", "Mercado de Capitales", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 96.0, 0.0, 36.0, 36.0, 0.0, 0.0, 36.0, 8.0, 16.0, 10.0, 12.0],["Noelia", "José Luis", "Análisis de Datos", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 64.0, 0.0, 36.0, 0.0, 36.0, 0.0, 0.0, 0.0, 0.0, 10.0, 8.0],["Noelia", "Natalia", "Simulación de Negocios", 59.0, 4.0, 0.0, 0.0, 0.0, 0.0, "Ing. Comercial", 64.0, 0.0, 36.0, 0.0, 36.0, 0.0, 0.0, 0.0, 0.0, 10.0, 8.0],["Noelia", "Natalia", "Análisis de Datos Cualitativos", 59.0, 4.0, 0.0, 0.0, 0.0, 0.0, "Trabajo Social", 64.0, 0.0, 36.0, 0.0, 36.0, 0.0, 0.0, 0.0, 0.0, 10.0, 8.0],["Noelia", "Natalia", "Electivo FP I: Tecnologías de Excavación en Minería", 59.0, 4.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["Noelia", "Natalia", "Electivo FP III: IA y Tecnologías 4.0 en Minería", 60.0, 3.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["Noelia", "Natalia", "Gestión de Operaciones Mineras", 60.0, 3.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 96.0, 0.0, 72.0, 0.0, 36.0, 0.0, 0.0, 0.0, 0.0, 19.0, 12.0],["Noelia", "Natalia", "Taller de Emprendimiento en Minería", 60.0, 3.0, 0.0, 0.0, 0.0, 0.0, "Ing. Civil", 64.0, 0.0, 0.0, 36.0, 27.0, 9.0, 0.0, 8.0, 16.0, 0.0, 8.0],["Noelia", "Natalia", "Electivo FP: Tecnología Médica", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Tecnología Médica", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0],["Noelia", "Natalia", "Electivo FP: Nutrición", 63.0, 0.0, 0.0, 0.0, 0.0, 0.0, "Nutrición", 64.0, 0.0, 36.0, 36.0, 0.0, 0.0, 0.0, 8.0, 16.0, 10.0, 8.0]];
+function initDashboard(){
+  var EO=["Ing. Civil","Ing. Comercial","Agronomía","Tecnología Médica","Trabajo Social","Formación General","Nutrición"];
+  var FC={"Ing. Civil":{col:"#1050a0",bg:"#e4ecf8"},"Ing. Comercial":{col:"#0a6060",bg:"#e0f4f4"},"Agronomía":{col:"#2a6e3c",bg:"#e4f5ee"},"Tecnología Médica":{col:"#8a2040",bg:"#fce8f0"},"Trabajo Social":{col:"#7a4800",bg:"#fef3e0"},"Formación General":{col:"#3050a0",bg:"#e8eef8"},"Nutrición":{col:"#3a6020",bg:"#eaf4e0"}};
+  var SL=["Sin Comenzar","En Prod. DI","Val. Docente","En Prod. DM","QA","Terminado"];
+  var SC=["s0","s1","s2","s3","s4","s5"];
+  function tt(r){return r[3]+r[4]+r[5]+r[6]+r[7]+r[8];}
+  function pp(r){var t=tt(r);return t?Math.round(r[8]/t*100):0;}
+  function pc(p){return p>=60?"#0a7a4e":p>=15?"#8a5000":"#6a7a98";}
+  function getIcon(e){if(e.indexOf("Civil")>-1)return "&#9881;";if(e.indexOf("Comercial")>-1)return "&#128200;";if(e.indexOf("gronom")>-1)return "&#127807;";if(e.indexOf("dica")>-1||e.indexOf("edic")>-1)return "&#128300;";if(e.indexOf("Social")>-1)return "&#129309;";if(e.indexOf("eneral")>-1)return "&#128218;";if(e.indexOf("utric")>-1)return "&#127793;";return "&#128203;";}
+  var dias=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  var meses=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  var now=new Date();
+  document.getElementById("clk").textContent=dias[now.getDay()]+" "+now.getDate()+" de "+meses[now.getMonth()]+" de "+now.getFullYear();
+  document.getElementById("fdate").textContent=now.toLocaleDateString("es-CL",{day:"2-digit",month:"2-digit",year:"numeric"});
+  var tT0=0,tA0=0;
+  for(var i=0;i<D.length;i++){tT0+=D[i][8];tA0+=tt(D[i]);}
+  var pG=tA0?Math.round(tT0/tA0*100):0;
+  document.getElementById("nav-stats").innerHTML="<div class=\"ns\"><div class=\"ns-v\">"+D.length+"</div><div class=\"ns-l\">Asignaturas</div></div><div class=\"ns\"><div class=\"ns-v\">"+pG+"%</div><div class=\"ns-l\">Avance General</div></div>";
+  var escs=[];
+  for(var i=0;i<D.length;i++){if(escs.indexOf(D[i][9])===-1&&D[i][9])escs.push(D[i][9]);}
+  escs.sort(function(a,b){return EO.indexOf(a)-EO.indexOf(b);});
+  var grid=document.getElementById("fgrid");
+  grid.innerHTML="";
+  escs.forEach(function(esc){
+    var cfg=FC[esc]||{col:"#0a2040",bg:"#e4e8f0"};
+    var rows=D.filter(function(d){return d[9]===esc;});
+    var tS=0,tP=0,tT=0,tA=0;
+    rows.forEach(function(r){tS+=r[3];tP+=r[4]+r[5]+r[6]+r[7];tT+=r[8];tA+=tt(r);});
+    var p=tA?Math.round(tT/tA*100):0;
+    var cid="c_"+esc.replace(/[^a-zA-Z0-9]/g,"_");
+    var card=document.createElement("div");
+    card.className="fc";
+    card.innerHTML="<div class=\"fc-stripe\" style=\"background:"+cfg.col+"\"></div><div class=\"fc-head\"><div class=\"fc-icon\" style=\"background:"+cfg.bg+";font-size:20px\">"+getIcon(esc)+"</div><div class=\"fc-info\"><div class=\"fc-name\">"+esc+"</div><div class=\"fc-count\">"+rows.length+" asignatura"+(rows.length>1?"s":"")+"</div></div><div class=\"fc-right\"><div class=\"fc-num\" style=\"color:"+cfg.col+"\">"+rows.length+"</div><div class=\"fc-num-l\">asignaturas</div></div></div><div class=\"fc-prog\"><div class=\"prog-bar\"><div class=\"prog-fill\" style=\"width:"+p+"%;background:"+cfg.col+"\"></div></div><div class=\"prog-lbl\"><span style=\"color:"+cfg.col+"\">"+rows.length+" asignaturas</span><span style=\"color:"+pc(p)+"\">"+p+"% avance</span></div></div><div class=\"fc-visual\"><div class=\"donut-wrap\"><canvas id=\""+cid+"\"></canvas><div class=\"donut-center\"><div class=\"donut-pct\" style=\"color:"+cfg.col+"\">"+p+"%</div><div class=\"donut-sub\">avance</div></div></div><div class=\"leg-col\"><div class=\"leg-i\"><div class=\"leg-dot\" style=\"background:"+cfg.col+"\"></div><span class=\"leg-txt\">Terminado</span><span class=\"leg-val\" style=\"color:"+cfg.col+"\">"+tT+"</span></div><div class=\"leg-i\"><div class=\"leg-dot\" style=\"background:"+cfg.col+'88'+"\"></div><span class=\"leg-txt\">En proceso</span><span class=\"leg-val\">"+tP+"</span></div><div class=\"leg-i\"><div class=\"leg-dot\" style=\"background:#d8dcea\"></div><span class=\"leg-txt\">Sin comenzar</span><span class=\"leg-val\" style=\"color:#6a7a98\">"+tS+"</span></div></div></div>";
+    card.onclick=function(esc,rows,cfg){return function(){openFac(esc,rows,cfg);};}(esc,rows,cfg);
+    grid.appendChild(card);
+    setTimeout(function(cid,tT,tP,tS,col){var el=document.getElementById(cid);if(!el)return;new Chart(el,{type:"doughnut",data:{datasets:[{data:[tT,tP,Math.max(0,tS)],backgroundColor:[col,col+"80","#d8dcea"],borderWidth:0,hoverOffset:3}]},options:{responsive:true,maintainAspectRatio:true,cutout:"68%",plugins:{legend:{display:false},tooltip:{enabled:false}},animation:{duration:800}}});},150,cid,tT,tP,tS,cfg.col);
+  });
+  function openFac(esc,rows,cfg){
+    document.getElementById("mo-badge").textContent=esc;
+    document.getElementById("mo-badge").style.cssText="background:"+cfg.bg+";color:"+cfg.col+";border:1px solid "+cfg.col+"40;";
+    document.getElementById("mo-title").textContent=esc+" — Asignaturas";
+    document.getElementById("mo-stripe").style.background=cfg.col;
+    var tT=0,tA=0;rows.forEach(function(r){tT+=r[8];tA+=tt(r);});
+    var p=tA?Math.round(tT/tA*100):0;
+    document.getElementById("mo-chips").innerHTML="<span style=\"font-family:var(--mono);font-size:13px;font-weight:700;color:"+pc(p)+";margin-left:auto\">"+p+"% avance general</span>";
+    var list="";
+    rows.forEach(function(r){var p2=pp(r);list+="<div class=\"si\" onclick=\"openDetail("+JSON.stringify(r).replace(/"/g,"'")+")\"><div class=\"si-nm\">"+r[2]+"</div><div class=\"si-pct\" style=\"color:"+pc(p2)+"\">"+p2+"%</div></div>";});
+    document.getElementById("mo-subj-list").innerHTML=list;
+    document.getElementById("ov").classList.add("open");
+  }
+  var dmChart=null;
+  window.openDetail=function(r){
+    if(typeof r==="string")r=JSON.parse(r.replace(/'/g,'"'));
+    var cfg2=FC[r[9]]||{col:"#0a2040",bg:"#e4e8f0"};
+    var p=pp(r),pco=pc(p);
+    document.getElementById("dm-stripe").style.background=cfg2.col;
+    document.getElementById("dm-badge").textContent=r[9];
+    document.getElementById("dm-badge").style.cssText="background:"+cfg2.bg+";color:"+cfg2.col+";border:1px solid "+cfg2.col+"40;";
+    document.getElementById("dm-title").textContent=r[2];
+    document.getElementById("dm-chips").innerHTML="<div class=\"chip chip-n\"><span class=\"lbl\">JP</span>"+r[0]+"</div><div class=\"chip chip-g\"><span class=\"lbl\">DI</span>"+r[1]+"</div><div class=\"mo-pch\" style=\"color:"+pco+";border-color:"+pco+"\">Avance "+p+"%</div>";
+    var sv=[r[3],r[4],r[5],r[6],r[7],r[8]],sh="";
+    for(var i=0;i<sv.length;i++)sh+="<div class=\"msc "+SC[i]+"\"><div class=\"sl\">"+SL[i]+"</div><div class=\"sv\">"+sv[i]+"</div></div>";
+    document.getElementById("dm-states").innerHTML=sh;
+    document.getElementById("dm-epct").innerHTML="<span style=\"color:"+pco+";font-family:var(--mono);font-size:12px;font-weight:700\">"+p+"%</span>";
+    if(dmChart){dmChart.destroy();dmChart=null;}
+    var ctx=document.getElementById("dm-evo").getContext("2d");
+    var gr=ctx.createLinearGradient(0,0,0,150);
+    gr.addColorStop(0,cfg2.col+"25");gr.addColorStop(1,cfg2.col+"00");
+    var wk=[];for(var i=1;i<=18;i++)wk.push("S"+i);
+    var prog=wk.map(function(_,i){if(!p)return 0;var t=i/5;return Math.min(Math.round(p/(1+Math.exp(-2*(t-1.5)))*10)/10,p);});
+    var tgt=wk.map(function(_,i){return Math.round((i+1)/18*100*10)/10;});
+    dmChart=new Chart(ctx,{type:"line",data:{labels:wk,datasets:[{label:"Avance real",data:prog,borderColor:cfg2.col,borderWidth:2,backgroundColor:gr,fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:cfg2.col,pointBorderColor:"#ffffff",pointBorderWidth:1.5},{label:"Meta esperada",data:tgt,borderColor:"rgba(138,80,0,.4)",borderWidth:1.5,borderDash:[5,4],fill:false,tension:0.1,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{display:true,position:"bottom",labels:{font:{family:"DM Mono",size:10},color:"#6a7a98",boxWidth:12,padding:12}},tooltip:{backgroundColor:"#fff",borderColor:"#dde2ee",borderWidth:1,titleColor:"#0a1628",bodyColor:"#2a3a58",titleFont:{family:"DM Mono",size:11},bodyFont:{family:"DM Mono",size:10},padding:9,callbacks:{label:function(c){return c.dataset.label+": "+c.parsed.y+"%";}}}},scales:{x:{grid:{color:"rgba(0,0,0,0.04)"},ticks:{color:"#6a7a98",font:{family:"DM Mono",size:9},maxRotation:0}},y:{min:0,max:100,grid:{color:"rgba(0,0,0,0.04)"},ticks:{color:"#6a7a98",font:{family:"DM Mono",size:9},callback:function(v){return v+"%";},stepSize:25}}}}});
+    var hd=[{l:"TPE",v:r[10],c:"hvtpe",h:"#6a7a98"},{l:"Presencial",v:r[11],c:"hvp",h:"#0a2040"},{l:"Sincrónica",v:r[12],c:"hvs",h:"#1050a0"},{l:"Asincrónica",v:r[13],c:"hva",h:"#8a5000"},{l:"Laboratorio",v:r[14],c:"hvl",h:"#5030a0"},{l:"Terreno",v:r[15],c:"hvt",h:"#903010"},{l:"Ayudantía",v:r[16],c:"hvay",h:"#2a6e3c"}].filter(function(h){return h.v>0;});
+    var hh="";hd.forEach(function(h){hh+="<div class=\"mhc\"><div class=\"hl\">"+h.l+"</div><div class=\"hv "+h.c+"\">"+h.v+"<span class=\"hu\">hrs</span></div></div>";});
+    document.getElementById("dm-hours").innerHTML=hh;
+    var ht=hd.reduce(function(s,h){return s+h.v;},0);
+    var hs="";hd.forEach(function(h){hs+="<div class=\"hstack-s\" style=\"width:"+(ht?(h.v/ht*100).toFixed(1):0)+"%;background:"+h.h+"\"></div>";});
+    document.getElementById("dm-hstack").innerHTML=hs;
+    var hl="";hd.forEach(function(h){hl+="<div class=\"hleg-i\"><div class=\"hleg-d\" style=\"background:"+h.h+"\"></div>"+h.l+": "+h.v+"h</div>";});
+    document.getElementById("dm-hleg").innerHTML=hl;
+    var res=[{t:"T1",cl:"r1",v:Math.round(r[17]*10)/10,d:"Videos / cápsulas teóricas"},{t:"T2",cl:"r2",v:Math.round(r[18]*10)/10,d:"Actividades prácticas"},{t:"T3",cl:"r3",v:Math.round(r[19]*10)/10,d:"Evaluaciones / rúbricas"},{t:"T4",cl:"r4",v:Math.round(r[20]*10)/10,d:"Material complementario"}];
+    var rh="";res.forEach(function(x){rh+="<div class=\"mrc "+x.cl+"\"><div class=\"rt\">Tipo "+x.t+"</div><div class=\"rv\">"+x.v+"</div><div class=\"rd\">"+x.d+"</div></div>";});
+    document.getElementById("dm-res").innerHTML=rh;
+    document.getElementById("dm").classList.add("open");
+  };
+  document.getElementById("mc").onclick=function(){document.getElementById("ov").classList.remove("open");};
+  document.getElementById("dmc").onclick=function(){document.getElementById("dm").classList.remove("open");};
+  document.getElementById("ov").onclick=function(e){if(e.target===this)this.classList.remove("open");};
+  document.getElementById("dm").onclick=function(e){if(e.target===this)this.classList.remove("open");};
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"){document.getElementById("ov").classList.remove("open");document.getElementById("dm").classList.remove("open");}});
+}
+initDashboard();
+</script>
+</body>
+</html>
