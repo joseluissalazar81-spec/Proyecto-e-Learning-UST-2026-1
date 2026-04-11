@@ -325,8 +325,7 @@ function openFac(esc,rows,cfg){
   var list="";
   rows.forEach(function(r){
     var p2=pp(r);
-    var rd=JSON.stringify(r).replace(/"/g,"&quot;");
-    list+='<div class="si" onclick='openDetail('+JSON.stringify(r)+')"><div class="si-nm">'+r[2]+'</div><div class="si-pct" style="color:'+pc(p2)+'">'+p2+'%</div></div>';
+    list+='<div class="si" onclick="openDetail('+JSON.stringify(r).replace(/"/g,"'")+')"><div class="si-nm">'+r[2]+'</div><div class="si-pct" style="color:'+pc(p2)+'">'+p2+'%</div></div>';
   });
   document.getElementById("mo-subj-list").innerHTML=list;
   document.getElementById("ov").classList.add("open");
