@@ -245,11 +245,11 @@ var UST_GREEN="#00a886",UST_GREEN_DARK="#007a62",UST_GREEN_TEXT="#006050";
 function iconSVG(esc){
   var n=esc.toLowerCase();
   if(n.indexOf("ingeniería")>-1||n.indexOf("ingenieria")>-1) return '<svg viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="3.5" stroke="currentColor" stroke-width="2"/><path d="M13 2.5v3M13 20.5v3M2.5 13h3M20.5 13h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5.4 5.4l2.1 2.1M18.5 18.5l2.1 2.1M5.4 20.6l2.1-2.1M18.5 7.5l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-  if(n.indexOf("econom")>-1||n.indexOf("negoc")>-1) return '<svg viewBox="0 0 26 26" fill="none"><rect x="3" y="15" width="4" height="8" rx="1" fill="currentColor" opacity=".45"/><rect x="11" y="10" width="4" height="13" rx="1" fill="currentColor" opacity=".7"/><rect x="19" y="5" width="4" height="18" rx="1" fill="currentColor"/><path d="M2 24h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 14l8-6 8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2"/></svg>';
-  if(n.indexOf("recurso")>-1||n.indexOf("natural")>-1) return '<svg viewBox="0 0 26 26" fill="none"><path d="M13 23C13 23 4 18.5 4 10.5C4 6 8.5 3 13 3C17.5 3 22 6 22 10.5C22 18.5 13 23 13 23Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13 23V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 17C13 17 8.5 15 7.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13 14.5C13 14.5 17 12.5 18 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  if(n.indexOf("econom")>-1||n.indexOf("negoc")>-1) return '<svg viewBox="0 0 26 26" fill="none"><rect x="3" y="15" width="4" height="8" rx="1" fill="currentColor" opacity=".45"/><rect x="11" y="10" width="4" height="13" rx="1" fill="currentColor" opacity=".7"/><rect x="19" y="5" width="4" height="18" rx="1" fill="currentColor"/><path d="M2 24h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  if(n.indexOf("recurso")>-1||n.indexOf("natural")>-1) return '<svg viewBox="0 0 26 26" fill="none"><path d="M13 23C13 23 4 18.5 4 10.5C4 6 8.5 3 13 3C17.5 3 22 6 22 10.5C22 18.5 13 23 13 23Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13 23V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   if(n.indexOf("salud")>-1) return '<svg viewBox="0 0 26 26" fill="none"><path d="M13 4v18M4 13h18" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><rect x="4" y="4" width="18" height="18" rx="4" stroke="currentColor" stroke-width="2"/></svg>';
-  if(n.indexOf("social")>-1||n.indexOf("ciencia")>-1) return '<svg viewBox="0 0 26 26" fill="none"><circle cx="13" cy="7" r="3" stroke="currentColor" stroke-width="2"/><circle cx="5" cy="18" r="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="21" cy="18" r="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 24c0-2.8 2.2-4 5-4s5 1.2 5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M13 10v4M13 14l-5 2M13 14l5 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
-  if(n.indexOf("formac")>-1||n.indexOf("general")>-1) return '<svg viewBox="0 0 26 26" fill="none"><path d="M4 6h7c1.1 0 2 .9 2 2v13H4V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M22 6h-7c-1.1 0-2 .9-2 2v13h9V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13 8v13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  if(n.indexOf("social")>-1||n.indexOf("ciencia")>-1) return '<svg viewBox="0 0 26 26" fill="none"><circle cx="13" cy="7" r="3" stroke="currentColor" stroke-width="2"/><circle cx="5" cy="18" r="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="21" cy="18" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>';
+  if(n.indexOf("formac")>-1||n.indexOf("general")>-1) return '<svg viewBox="0 0 26 26" fill="none"><path d="M4 6h7c1.1 0 2 .9 2 2v13H4V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M22 6h-7c-1.1 0-2 .9-2 2v13h9V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
   return '<svg viewBox="0 0 26 26" fill="none"><rect x="5" y="2" width="16" height="22" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 8h8M9 12h8M9 16h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 }
 
@@ -262,18 +262,24 @@ function pc(p){return p>=60?UST_GREEN_DARK:p>=15?"#8a5000":"#6a7a98";}
 
 var dias=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
 var meses=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
-var now=new Date();
-document.getElementById("clk").textContent=dias[now.getDay()]+" "+now.getDate()+" de "+meses[now.getMonth()];
-document.getElementById("fdate").textContent=now.toLocaleDateString("es-CL",{day:"2-digit",month:"2-digit",year:"numeric"});
+function tick(){
+  var n=new Date();
+  var hh=n.getHours().toString().padStart(2,"0");
+  var mm=n.getMinutes().toString().padStart(2,"0");
+  var ss=n.getSeconds().toString().padStart(2,"0");
+  document.getElementById("clk").textContent=dias[n.getDay()]+" "+n.getDate()+" de "+meses[n.getMonth()]+" · "+hh+":"+mm+":"+ss;
+}
+tick();setInterval(tick,1000);
+document.getElementById("fdate").textContent=new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"2-digit",year:"numeric"});
 
 var escs=[];
-for(var i=0;i<D.length;i++){if(escs.indexOf(D[i][9])===-1&&D[i][9])escs.push(D[i][9]);}
+for(var i=0;i<D.length;i++){if(escs.indexOf(D[i][11])===-1&&D[i][11])escs.push(D[i][11]);}
 escs.sort(function(a,b){return EO.indexOf(a)-EO.indexOf(b);});
 var grid=document.getElementById("fgrid");
 
 escs.forEach(function(esc){
   var cfg=UST[esc]||{col:UST_GREEN_DARK,bg:"#e0f4f0"};
-  var rows=D.filter(function(d){return d[9]===esc;});
+  var rows=D.filter(function(d){return d[11]===esc;});
   var tS=0,tP=0,tT=0,tA=0;
   rows.forEach(function(r){tS+=r[3];tP+=r[4]+r[5]+r[6]+r[7];tT+=r[8];tA+=tt(r);});
   var p=tA?Math.round(tT/tA*100):0;
@@ -325,18 +331,19 @@ function openFac(esc,rows,cfg){
   var list="";
   rows.forEach(function(r){
     var p2=pp(r);
-    list+='<div class="si" onclick="openDetail('+JSON.stringify(r).replace(/"/g,"'")+')"><div class="si-nm">'+r[2]+'</div><div class="si-pct" style="color:'+pc(p2)+'">'+p2+'%</div></div>';
+    list+='<div class="si" onclick="openDetail(this)" data-row=\''+JSON.stringify(r).replace(/'/g,"&#39;")+'\'><div class="si-nm">'+r[2]+'</div><div class="si-pct" style="color:'+pc(p2)+'">'+p2+'%</div></div>';
   });
   document.getElementById("mo-subj-list").innerHTML=list;
   document.getElementById("ov").classList.add("open");
 }
 
 var dmChart=null;
-window.openDetail=function(r){
-  var cfg2=UST[r[9]]||{col:UST_GREEN_DARK,bg:"#e0f4f0"};
+window.openDetail=function(el){
+  var r=JSON.parse(el.getAttribute("data-row"));
+  var cfg2=UST[r[11]]||{col:UST_GREEN_DARK,bg:"#e0f4f0"};
   var p=pp(r),pco=pc(p);
   document.getElementById("dm-stripe").style.background=cfg2.col;
-  document.getElementById("dm-badge").textContent=r[9];
+  document.getElementById("dm-badge").textContent=r[11];
   document.getElementById("dm-badge").style.cssText="background:"+cfg2.bg+";color:"+cfg2.col+";border:1px solid "+cfg2.col+"40;";
   document.getElementById("dm-title").textContent=r[2];
   document.getElementById("dm-chips").innerHTML=
@@ -357,20 +364,19 @@ window.openDetail=function(r){
   dmChart=new Chart(ctx,{type:"line",data:{labels:wk,datasets:[
     {label:"Avance real",data:prog,borderColor:cfg2.col,borderWidth:2,backgroundColor:gr,fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:cfg2.col,pointBorderColor:"#ffffff",pointBorderWidth:1.5},
     {label:"Meta esperada",data:tgt,borderColor:"rgba(138,80,0,.4)",borderWidth:1.5,borderDash:[5,4],fill:false,tension:0.1,pointRadius:0}
-  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+  ]},options:{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{display:true,position:"bottom",labels:{font:{family:"DM Mono",size:10},color:"#6a7a98",boxWidth:12,padding:12}},
-    tooltip:{backgroundColor:"#fff",borderColor:"#dde2ee",borderWidth:1,titleColor:"#0a1628",bodyColor:"#2a3a58",titleFont:{family:"DM Mono",size:11},bodyFont:{family:"DM Mono",size:10},padding:9,
-      callbacks:{label:function(c){return c.dataset.label+": "+c.parsed.y+"%";}}}},
+    tooltip:{backgroundColor:"#fff",borderColor:"#dde2ee",borderWidth:1,padding:9}},
     scales:{x:{grid:{color:"rgba(0,0,0,0.04)"},ticks:{color:"#6a7a98",font:{family:"DM Mono",size:9},maxRotation:0}},
     y:{min:0,max:100,grid:{color:"rgba(0,0,0,0.04)"},ticks:{color:"#6a7a98",font:{family:"DM Mono",size:9},callback:function(v){return v+"%";},stepSize:25}}}}});
   var hd=[
     {l:"TPE",v:r[10],c:"hvtpe",h:"#6a7a98"},
-    {l:"Presencial",v:r[11],c:"hvp",h:UST_GREEN_DARK},
-    {l:"Sincrónica",v:r[12],c:"hvs",h:UST_GREEN},
-    {l:"Asincrónica",v:r[13],c:"hva",h:"#8a5000"},
-    {l:"Laboratorio",v:r[14],c:"hvl",h:"#5030a0"},
-    {l:"Terreno",v:r[15],c:"hvt",h:"#903010"},
-    {l:"Ayudantía",v:r[16],c:"hvay",h:"#2a6e3c"}
+    {l:"Presencial",v:r[12],c:"hvp",h:UST_GREEN_DARK},
+    {l:"Sincrónica",v:r[13],c:"hvs",h:UST_GREEN},
+    {l:"Asincrónica",v:r[14],c:"hva",h:"#8a5000"},
+    {l:"Laboratorio",v:r[15],c:"hvl",h:"#5030a0"},
+    {l:"Terreno",v:r[16],c:"hvt",h:"#903010"},
+    {l:"Ayudantía",v:r[17],c:"hvay",h:"#2a6e3c"}
   ].filter(function(h){return h.v>0;});
   var hh="";hd.forEach(function(h){hh+='<div class="mhc"><div class="hl">'+h.l+'</div><div class="hv '+h.c+'">'+h.v+'<span class="hu">hrs</span></div></div>';});
   document.getElementById("dm-hours").innerHTML=hh;
@@ -380,10 +386,10 @@ window.openDetail=function(r){
   var hl="";hd.forEach(function(h){hl+='<div class="hleg-i"><div class="hleg-d" style="background:'+h.h+'"></div>'+h.l+': '+h.v+'h</div>';});
   document.getElementById("dm-hleg").innerHTML=hl;
   var res=[
-    {t:"T1",cl:"r1",v:r[17],d:"Videos / cápsulas teóricas"},
-    {t:"T2",cl:"r2",v:r[18],d:"Actividades prácticas"},
-    {t:"T3",cl:"r3",v:r[19],d:"Evaluaciones / rúbricas"},
-    {t:"T4",cl:"r4",v:r[20],d:"Material complementario"}
+    {t:"T1",cl:"r1",v:r[18],d:"Videos / cápsulas teóricas"},
+    {t:"T2",cl:"r2",v:r[19],d:"Actividades prácticas"},
+    {t:"T3",cl:"r3",v:r[20],d:"Evaluaciones / rúbricas"},
+    {t:"T4",cl:"r4",v:r[21],d:"Material complementario"}
   ];
   var rh="";res.forEach(function(x){rh+='<div class="mrc '+x.cl+'"><div class="rt">Tipo '+x.t+'</div><div class="rv">'+x.v+'</div><div class="rd">'+x.d+'</div></div>';});
   document.getElementById("dm-res").innerHTML=rh;
