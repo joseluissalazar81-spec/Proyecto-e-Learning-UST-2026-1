@@ -6,6 +6,7 @@
 <title>Dashboard e-Learning UST 2026-1</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.23.1/dist/powerbi.min.js"></script>
 <style>
 :root{
   --navy:#00a886;--navy-dark:#007a62;--navy-text:#006050;
@@ -146,6 +147,10 @@ main{max-width:1480px;margin:0 auto;padding:28px 28px 60px;}
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:var(--bg2);}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+.pbi-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);padding:14px;margin-bottom:24px;}
+.pbi-frame{width:100%;height:600px;border-radius:8px;overflow:hidden;background:var(--card2);}
+.pbi-state{display:flex;align-items:center;justify-content:center;height:100%;color:var(--text3);font-family:var(--mono);font-size:12px;text-align:center;padding:20px;}
+.pbi-state.err{color:#b03020;}
 </style>
 </head>
 <body>
@@ -178,6 +183,11 @@ main{max-width:1480px;margin:0 auto;padding:28px 28px 60px;}
 </header>
 
 <main>
+  <div class="sec"><div class="sec-title">Reporte Power BI (en vivo)</div><div class="sec-line"></div></div>
+  <div class="pbi-wrap">
+    <div class="pbi-frame" id="pbiFrame"><div class="pbi-state" id="pbiState">Cargando reporte…</div></div>
+  </div>
+
   <div class="sec"><div class="sec-title">Detalle por Facultad / Programa</div><div class="sec-line"></div></div>
   <div class="fgrid" id="fgrid"></div>
   <div class="footer">
@@ -401,6 +411,35 @@ document.getElementById("dmc").onclick=function(){document.getElementById("dm").
 document.getElementById("ov").onclick=function(e){if(e.target===this)this.classList.remove("open");};
 document.getElementById("dm").onclick=function(e){if(e.target===this)this.classList.remove("open");};
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){document.getElementById("ov").classList.remove("open");document.getElementById("dm").classList.remove("open");}});
+
+(function(){
+  var frame=document.getElementById("pbiFrame");
+  var state=document.getElementById("pbiState");
+  function showError(msg){
+    state.className="pbi-state err";
+    state.textContent=msg;
+  }
+  fetch("/api/getEmbedToken")
+    .then(function(res){
+      if(!res.ok){return res.json().then(function(b){throw new Error(b.error||("HTTP "+res.status));});}
+      return res.json();
+    })
+    .then(function(data){
+      state.remove();
+      var models=window["powerbi-client"].models;
+      window.powerbi.embed(frame,{
+        type:"report",
+        id:data.reportId,
+        embedUrl:data.embedUrl,
+        accessToken:data.embedToken,
+        tokenType:models.TokenType.Embed,
+        settings:{panes:{filters:{visible:false},pageNavigation:{visible:true}}}
+      });
+    })
+    .catch(function(err){
+      showError("No se pudo cargar el reporte de Power BI: "+err.message);
+    });
+})();
 </script>
 </body>
 </html>
